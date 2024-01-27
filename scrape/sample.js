@@ -1,17 +1,20 @@
-import module from 'module';
+import puppeteer from "puppeteer";
 
-/**
- * 特定のディレクトリのpuppeteerを指定して読み込む
- * 容量の大きいpuppeteerをプロジェクト外で管理可能
- * ファイル端子をmjsにしてES6モジュール扱いにすることでコマンド実行可能へ（node index.js）
- */
-const require = module.createRequire(import.meta.url); // 絶対パス指定のため、requireを生成
-const pModule = "/home/glkt/projects/puppeteer-scraping/node_modules/puppeteer";
-const puppeteer = require(pModule);
+// Unhandled promise rejection
+process.on('unhandledRejection', (error) => {
+  console.error(error);
+  process.exit(1);
+});
 
 (async () => {
-    const browser = await puppeteer.launch({ headless: "new"}); // 最新版のchroinumの更新によりヘッドレスの記述が変更のため、new
+    const browser = await puppeteer.launch({ 
+      headless: "new", // 最新版のchroinumの更新によりヘッドレス時の記述が変更のため、new
+      slowMo: 50 //指定のミリ秒スローモーションで実行
+    });
+    // 新規の空ページ
     const page = await browser.newPage();
+    // view portの設定
+    // await page.setViewport({ width: 1200, height: 800 });
 
     await page.setRequestInterception(true);
     page.on('request', request => {
