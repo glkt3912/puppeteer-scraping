@@ -1,0 +1,36 @@
+import puppeteer from 'puppeteer';
+
+class CpuPage {
+  constructor(page) {
+    this.page = page;
+  }
+
+  async getCpuData() {
+    return this.page.evaluate(() => {
+      const nodeList = document.querySelectorAll('.rkgBox.noGraph');
+      const items = Array.from(nodeList).map(node => { // 商品名と価格を取得
+        const text = node.textContent;
+        
+        // 抽出
+        const nameMatch = text.match(/インテル\n(.+?)\n/);
+        const name = nameMatch ? nameMatch[1] : null;
+        const priceMatch = text.match(/最安値([¥\d,]+)/);
+        const price = priceMatch ? priceMatch[1] : null;
+        const releaseDateMatch = text.match(/発売日：(\d{4}年\d{1,2}月\d{1,2}日)/);
+        const releaseDate = releaseDateMatch ? releaseDateMatch[1] : null;
+        const processorMatch = text.match(/プロセッサ名：(.+?)(?= 世代：|$)/);
+        const processor = processorMatch ? processorMatch[1] : null;
+        const generationMatch = text.match(/世代：(.+?)(?= クロック周波数：|$)/);
+        const generation = generationMatch ? generationMatch[1] : null;
+        const frequencyMatch = text.match(/クロック周波数：(.+?)(?= ソケット形状：|$)/);
+        const frequency = frequencyMatch ? frequencyMatch[1] : null;
+        const socketMatch = text.match(/ソケット形状：(.+?)(?= 二次キャッシュ：|$)/);
+        const socket = socketMatch ? socketMatch[1] : null;
+        const cacheMatch = text.match(/二次キャッシュ：(.+?)(?=\n|$)/);
+        const cache = cacheMatch ? cacheMatch[1] : null;
+
+        return { name, price, releaseDate, processor, generation, frequency, socket, cache };
+      });
+    });
+  }
+}
