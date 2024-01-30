@@ -2,10 +2,12 @@ import ISiteScraper from './ISiteScraper.js';
 import puppeteer from 'puppeteer';
 import CpuPage from '../pageObjects/CpuPage.js';
 
-const url = process.env.CPU_SCRAPING_URL;
-
 export default class CpuScraper extends ISiteScraper {
   async scrape(url) {
+    if (!url || typeof url !== 'string') {
+      throw new Error(`Invalid URL: ${url}`);
+    }
+    let data;
     const browser = await puppeteer.launch({ headless: "new"});
     const page = await browser.newPage();
     await page.setRequestInterception(true);
@@ -16,11 +18,26 @@ export default class CpuScraper extends ISiteScraper {
         request.continue();
       }
     });
-    await page.goto(url);
+    try {
+      await page.goto(url, { waitUntil: 'domcontentloaded',timeout: 60000 });
+    } catch (error) {
+        console.error('ページのロードに失敗しました:', error);
+    }
 
-    const cpuPage = new CpuPage(page);
-    const data = await cpuPage.getCpuData();
-
+    console.log('page catch');
+    try {
+      const cpuPage = new CpuPage(page);
+      data = await cpuPage.getCpuData();
+      if (data && data.length > 0) {
+        console.log(`スクレイピングしたパーツ: ${data.length}件`);
+        // パーツごとの処理をここに追加
+      } else {
+        console.log('スクレイピングしたパーツはありません。');
+      }
+    } catch (error) {
+      console.error('エラーが発生しました:', error);
+    }
+    
     await browser.close();
     console.log(data);
     return data;

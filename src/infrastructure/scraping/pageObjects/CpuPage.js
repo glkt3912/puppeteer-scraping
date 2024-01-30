@@ -1,4 +1,4 @@
-import puppeteer from 'puppeteer';
+import puppeteer from "puppeteer";
 
 class CpuPage {
   constructor(page) {
@@ -6,9 +6,15 @@ class CpuPage {
   }
 
   async getCpuData() {
+    this.page.on('console', message => {
+      console.log(`ブラウザコンソール: ${message.text()}`);
+    });
+
     return this.page.evaluate(() => {
       const nodeList = document.querySelectorAll('.rkgBox.noGraph');
+      console.log(nodeList);
       const items = Array.from(nodeList).map(node => { // 商品名と価格を取得
+        console.log(node);
         const text = node.textContent;
         
         // 抽出
@@ -31,6 +37,9 @@ class CpuPage {
 
         return { name, price, releaseDate, processor, generation, frequency, socket, cache };
       });
+      return items;
     });
   }
 }
+
+export default CpuPage;

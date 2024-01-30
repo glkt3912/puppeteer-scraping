@@ -17,14 +17,9 @@ class CpuPart {
       this.price = newPrice;
     }
   
-    // CPUの仕様を更新するメソッド
-    updateSpecifications(newSpecifications) {
-      this.specifications = newSpecifications;
-    }
-  
     // CPU情報を文字列で表現するメソッド
     toString() {
-    //   return `CpuPart: ${this.name}, Price: ${this.price}, Specifications: ${JSON.stringify(this.specifications)}, Core Count: ${this.coreCount}, Clock Speed: ${this.clockSpeed}`;
+      return `CpuPart: ${this.name}, Price: ${this.price}, Processor: ${this.processor}, Generation: ${this.generation}, Frequency: ${this.frequency}, Socket: ${this.socket}, Cache: ${this.cache}`;
     }
   }
   

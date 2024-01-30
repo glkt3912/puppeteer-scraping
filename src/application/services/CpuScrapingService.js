@@ -1,15 +1,26 @@
-// import CpuPart from '../domain/entities/CpuPart.js';
-require('dotenv').config();
+import CpuPart from '../../domain/entities/CpuPart.js';
 
 class CpuScrapingService {
   constructor(siteScraper) {
     this.siteScraper = siteScraper;
-    this.url = process.env.CPU_SCRAPING_URL;
+    this.url = "https://kakaku.com/pc/cpu/ranking_0510/hot/";
   }
 
   async scrapeParts() {
     const rawData = await this.siteScraper.scrape(this.url);
-    return rawData.map(data => new data);
+    console.log(rawData);
+    // return rawData.map(data => new CpuPart(data));
+    // try {
+    //   const rawData = await this.siteScraper.scrape(this.url);
+    //   if (Array.isArray(rawData)) {
+    //     console.log(rawData);
+    //     return rawData.map(data => new CpuPart(data));
+    //   } else {
+    //     throw new Error('Invalid data format received from scraping.');
+    //   }
+    // } catch (error) {
+    //   throw error;
+    // }
   }
 }
 
