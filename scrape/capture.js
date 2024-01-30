@@ -1,4 +1,5 @@
 import puppeteer from "puppeteer";
+<<<<<<< HEAD
 
 async function caputureScpape() {
     const browser = await puppeteer.launch({
@@ -23,3 +24,7 @@ async function caputureScpape() {
 }
 
 caputureScpape();
+=======
+import fs from "fs";
+import path from "path";
+>>>>>>> ddd

@@ -1,0 +1,255 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id          Int           @id @default(autoincrement())
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime
+  name        String        @unique
+  Cooler      Cooler[]
+  Cpu         Cpu[]
+  Display     Display[]
+  Gpu         Gpu[]
+  Hdd         Hdd[]
+  Memory      Memory[]
+  MotherBoard MotherBoard[]
+  PcCase      PcCase[]
+  Power       Power[]
+  Ssd         Ssd[]
+}
+
+model Cooler {
+  id           Int         @id @default(autoincrement())
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime
+  name         String
+  brand        String
+  image        String?
+  url          String?     @db.VarChar(2048)
+  price        String?
+  categoryId   Int
+  airFlow      String
+  coolingType  String
+  fanCount     Int
+  size         String
+  socket       String
+  supportedTdp Int
+  Category     Category    @relation(fields: [categoryId], references: [id])
+  PartsList    PartsList[]
+}
+
+model Cpu {
+  id               Int         @id @default(autoincrement())
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime
+  name             String
+  brand            String
+  processor        String
+  socket           String
+  image            String?
+  categoryId       Int
+  price            String?
+  url              String?     @db.VarChar(2048)
+  baseFrequency    String
+  boostedFrequency String
+  core             Int
+  wattage          Int
+  Category         Category    @relation(fields: [categoryId], references: [id])
+  PartsList        PartsList[]
+}
+
+model Display {
+  id         Int         @id @default(autoincrement())
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime
+  name       String
+  brand      String
+  size       String
+  contrast   String?
+  image      String?
+  categoryId Int
+  price      String?
+  resolution String
+  speed      String
+  type       String
+  url        String?     @db.VarChar(2048)
+  Category   Category    @relation(fields: [categoryId], references: [id])
+  PartsList  PartsList[]
+}
+
+model Gpu {
+  id              Int         @id @default(autoincrement())
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime
+  name            String
+  brand           String
+  chip            String
+  core            String
+  memory          String
+  interface       String
+  image           String?
+  url             String?     @db.VarChar(2048)
+  price           String?
+  categoryId      Int
+  baseFrequency   String
+  length          String
+  memoryFrequency String
+  wattage         Int
+  Category        Category    @relation(fields: [categoryId], references: [id])
+  PartsList       PartsList[]
+}
+
+model Hdd {
+  id         Int         @id @default(autoincrement())
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime
+  name       String
+  brand      String
+  capacity   String
+  speed      String
+  image      String?
+  categoryId Int
+  price      String?
+  url        String?     @db.VarChar(2048)
+  interface  String
+  size       String
+  Category   Category    @relation(fields: [categoryId], references: [id])
+  PartsList  PartsList[]
+}
+
+model Memory {
+  id         Int         @id @default(autoincrement())
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime
+  name       String
+  brand      String
+  interface  String
+  image      String?
+  categoryId Int
+  url        String?     @db.VarChar(2048)
+  price      String?
+  type       String
+  frequency  String
+  Category   Category    @relation(fields: [categoryId], references: [id])
+  PartsList  PartsList[]
+}
+
+model MotherBoard {
+  id          Int         @id @default(autoincrement())
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime
+  name        String
+  brand       String
+  socket      String
+  image       String?
+  categoryId  Int
+  price       String?
+  url         String?     @db.VarChar(2048)
+  formFactor  String
+  memoryType  String
+  pciSlots    String?
+  chip        String
+  maxMemory   Int
+  memorySlots Int
+  Category    Category    @relation(fields: [categoryId], references: [id])
+  PartsList   PartsList[]
+}
+
+model PartsList {
+  id            Int          @id @default(autoincrement())
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime
+  name          String
+  userId        Int
+  cpuId         Int?
+  motherboardId Int?
+  memoryId      Int?
+  hddId         Int?
+  ssdId         Int?
+  powerId       Int?
+  pccaseId      Int?
+  displayId     Int?
+  isOpened      Boolean
+  gpuId         Int?
+  description   String
+  coolerId      Int?
+  Cooler        Cooler?      @relation(fields: [coolerId], references: [id])
+  Cpu           Cpu?         @relation(fields: [cpuId], references: [id])
+  Display       Display?     @relation(fields: [displayId], references: [id])
+  Gpu           Gpu?         @relation(fields: [gpuId], references: [id])
+  Hdd           Hdd?         @relation(fields: [hddId], references: [id])
+  Memory        Memory?      @relation(fields: [memoryId], references: [id])
+  MotherBoard   MotherBoard? @relation(fields: [motherboardId], references: [id])
+  PcCase        PcCase?      @relation(fields: [pccaseId], references: [id])
+  Power         Power?       @relation(fields: [powerId], references: [id])
+  Ssd           Ssd?         @relation(fields: [ssdId], references: [id])
+  User          User         @relation(fields: [userId], references: [id])
+}
+
+model PcCase {
+  id         Int         @id @default(autoincrement())
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime
+  name       String
+  brand      String
+  weight     String
+  image      String?
+  categoryId Int
+  price      String?
+  url        String?     @db.VarChar(2048)
+  size       String
+  formFactor String
+  PartsList  PartsList[]
+  Category   Category    @relation(fields: [categoryId], references: [id])
+}
+
+model Power {
+  id            Int         @id @default(autoincrement())
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime
+  name          String
+  brand         String
+  capacity      String
+  image         String?
+  categoryId    Int
+  price         String?
+  url           String?     @db.VarChar(2048)
+  certification String
+  type          String
+  PartsList     PartsList[]
+  Category      Category    @relation(fields: [categoryId], references: [id])
+}
+
+model Ssd {
+  id         Int         @id @default(autoincrement())
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime
+  name       String
+  brand      String
+  capacity   String
+  size       String
+  interface  String
+  image      String?
+  categoryId Int
+  price      String?
+  url        String?     @db.VarChar(2048)
+  speed      String
+  PartsList  PartsList[]
+  Category   Category    @relation(fields: [categoryId], references: [id])
+}
+
+model User {
+  id             Int         @id @default(autoincrement())
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime
+  email          String      @unique
+  name           String      @unique
+  hashedPassword String
+  PartsList      PartsList[]
+}
