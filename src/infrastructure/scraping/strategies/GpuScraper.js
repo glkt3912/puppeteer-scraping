@@ -1,8 +1,8 @@
 import ISiteScraper from './ISiteScraper.js';
 import puppeteer from 'puppeteer';
-import CpuPage from '../pageObjects/CpuPage.js';
+import GpuPage from '../pageObjects/GpuPage.js';
 
-export default class CpuScraper extends ISiteScraper {
+export default class GpuScraper extends ISiteScraper {
   async scrape(url) {
     if (!url || typeof url !== 'string') {
       throw new Error(`Invalid URL: ${url}`);
@@ -12,24 +12,25 @@ export default class CpuScraper extends ISiteScraper {
     const page = await browser.newPage();
     await page.setRequestInterception(true);
     page.on('request', request => {
-      if (['stylesheet', 'font'].includes(request.resourceType())) {
+      if (['stylesheet', 'font', 'script'].includes(request.resourceType())) {
         request.abort();
       } else {
         request.continue();
       }
     });
     try {
-      await page.goto(url, { waitUntil: 'networkidle2',timeout: 60000 });
+      await page.goto(url, { waitUntil: 'networkidle2',timeout: 120000 });
       // 補足情報が含まれる要素がページに確実に存在することを確認
-      // await page.waitForFunction(() => document.querySelectorAll('.rkgBox.noGraph .rkgDetailList li').length > 0, {timeout: 10000});
+      await page.waitForTimeout(1000);
     } catch (error) {
         console.error('ページのロードに失敗しました:', error);
     }
 
     console.log('page catch');
     try {
-      const cpuPage = new CpuPage(page);
-      data = await cpuPage.getCpuData();
+      const gpuPage = new GpuPage(page);
+      data = await gpuPage.getGpuData();
+      console.log(data);
       if (data && data.length > 0) {
         console.log(`スクレイピングしたパーツ: ${data.length}件`);
         // パーツごとの処理をここに追加

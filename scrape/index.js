@@ -14,7 +14,7 @@ import puppeteer from "puppeteer";
     });
   
     try {
-      await page.goto('https://kakaku.com/pc/gaming-pc/itemlist.aspx', { waitUntil: 'domcontentloaded',timeout: 60000 });
+      await page.goto('https://kakaku.com/pc/videocard/ranking_0550/hot', { waitUntil: 'domcontentloaded',timeout: 60000 });
     } catch (error) {
         console.error('ページのロードに失敗しました:', error);
     }
@@ -22,7 +22,7 @@ import puppeteer from "puppeteer";
     await page.waitForTimeout(1000);
 
     const pageDom = await page.evaluate(() => {
-      const elements = document.querySelectorAll(".ckitemLink");
+      const elements = document.querySelectorAll(".rkgContents");
       return Array.from(elements).map(element => element.textContent.trim());
     });
     console.log(pageDom);

@@ -1,5 +1,3 @@
-import puppeteer from "puppeteer";
-
 class CpuPage {
   constructor(page) {
     this.page = page;
@@ -14,9 +12,7 @@ class CpuPage {
       const nodeList = document.querySelectorAll('.rkgBox.noGraph');
       console.log(nodeList);
       const items = Array.from(nodeList).map(node => { // 商品名と価格を取得
-        console.log(node);
         const text = node.textContent;
-        
         // 抽出
         const nameMatch = text.match(/メーカー：(AMD|インテル)\n?(.+?)\n/);
         let name = nameMatch ? nameMatch[1] : null;
@@ -37,8 +33,11 @@ class CpuPage {
         const cache = cacheMatch ? cacheMatch[1] : null;
         // 画像URLの抽出
         const imgSrc = node.querySelector('.rkgItemImg img') ? node.querySelector('.rkgItemImg img').src : null;
+        // // 補足情報を取得
+        // const detailListElements = node.querySelectorAll('.rkgDetailList li');
+        // const detailList = detailListElements.length > 0 ? Array.from(detailListElements).map(li => li.textContent.trim()) : [];
 
-        return { name, price, releaseDate, processor, generation, frequency, socket, cache, imgSrc };
+        return { name, price, releaseDate, processor, generation, frequency, socket, cache, imgSrc};
       });
       return items;
     });
