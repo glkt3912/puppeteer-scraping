@@ -1,5 +1,5 @@
-import GpuScrapingService from "../application/services/GpuScrapingService.js";
-import GpuScraper from "../infrastructure/scraping/strategies/GpuScraper.js";
+import GpuScrapingService from '../application/services/GpuScrapingService.js';
+import GpuScraper from '../infrastructure/scraping/strategies/GpuScraper.js';
 // dotenvを動的にインポート
 // import('dotenv/config');
 // console.log(process.env.CPU_SCRAPING_URL);
@@ -7,10 +7,11 @@ import GpuScraper from "../infrastructure/scraping/strategies/GpuScraper.js";
 const gpuScraper = new GpuScraper();
 const scrapingService = new GpuScrapingService(gpuScraper);
 
-scrapingService.scrapeParts()
-  .then(parts => {
+scrapingService
+  .scrapeParts()
+  .then((parts) => {
     console.log('スクレイピングしたパーツ:', parts);
   })
-  .catch(error => {
+  .catch((error) => {
     console.error('エラー:', error);
   });

@@ -7,7 +7,7 @@ class PcPartsScrapingService {
 
   async scrapeParts(url) {
     const rawData = await this.siteScraper.scrape(url);
-    return rawData.map(data => new PcPart(data));
+    return rawData.map((data) => new PcPart(data));
   }
 }
 

@@ -5,6 +5,9 @@
   "description": "PCパーツの最新情報、価格等を取得するスクレイピングのテスト",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "format": "prettier --write src/"
+  },
   "dependencies": {
     "@prisma/client": "^5.8.1",
     "dotenv": "^16.4.1",

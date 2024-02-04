@@ -8,10 +8,10 @@ export default class CpuScraper extends ISiteScraper {
       throw new Error(`Invalid URL: ${url}`);
     }
     let data;
-    const browser = await puppeteer.launch({ headless: "new"});
+    const browser = await puppeteer.launch({ headless: 'new' });
     const page = await browser.newPage();
     await page.setRequestInterception(true);
-    page.on('request', request => {
+    page.on('request', (request) => {
       if (['stylesheet', 'font'].includes(request.resourceType())) {
         request.abort();
       } else {
@@ -19,11 +19,11 @@ export default class CpuScraper extends ISiteScraper {
       }
     });
     try {
-      await page.goto(url, { waitUntil: 'networkidle2',timeout: 60000 });
+      await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 });
       // 補足情報が含まれる要素がページに確実に存在することを確認
       // await page.waitForFunction(() => document.querySelectorAll('.rkgBox.noGraph .rkgDetailList li').length > 0, {timeout: 10000});
     } catch (error) {
-        console.error('ページのロードに失敗しました:', error);
+      console.error('ページのロードに失敗しました:', error);
     }
 
     console.log('page catch');
@@ -39,7 +39,7 @@ export default class CpuScraper extends ISiteScraper {
     } catch (error) {
       console.error('エラーが発生しました:', error);
     }
-    
+
     await browser.close();
     console.log(data);
     return data;

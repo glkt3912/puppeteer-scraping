@@ -4,14 +4,15 @@ class CpuPage {
   }
 
   async getCpuData() {
-    this.page.on('console', message => {
+    this.page.on('console', (message) => {
       console.log(`ブラウザコンソール: ${message.text()}`);
     });
 
     return this.page.evaluate(() => {
       const nodeList = document.querySelectorAll('.rkgBox.noGraph');
       console.log(nodeList);
-      const items = Array.from(nodeList).map(node => { // 商品名と価格を取得
+      const items = Array.from(nodeList).map((node) => {
+        // 商品名と価格を取得
         const text = node.textContent;
         // 抽出
         const nameMatch = text.match(/メーカー：(AMD|インテル)\n?(.+?)\n/);
@@ -19,25 +20,45 @@ class CpuPage {
         name = name === 'インテル' ? 'Intel' : name;
         const priceMatch = text.match(/最安値([¥\d,]+)/);
         const price = priceMatch ? priceMatch[1] : null;
-        const releaseDateMatch = text.match(/発売日：(\d{4}年\d{1,2}月\d{1,2}日)/);
+        const releaseDateMatch = text.match(
+          /発売日：(\d{4}年\d{1,2}月\d{1,2}日)/,
+        );
         const releaseDate = releaseDateMatch ? releaseDateMatch[1] : null;
         const processorMatch = text.match(/プロセッサ名：(.+?)(?= 世代：|$)/);
         const processor = processorMatch ? processorMatch[1] : null;
-        const generationMatch = text.match(/世代：(.+?)(?= クロック周波数：|$)/);
+        const generationMatch = text.match(
+          /世代：(.+?)(?= クロック周波数：|$)/,
+        );
         const generation = generationMatch ? generationMatch[1] : null;
-        const frequencyMatch = text.match(/クロック周波数：(.+?)(?= ソケット形状：|$)/);
+        const frequencyMatch = text.match(
+          /クロック周波数：(.+?)(?= ソケット形状：|$)/,
+        );
         const frequency = frequencyMatch ? frequencyMatch[1] : null;
-        const socketMatch = text.match(/ソケット形状：(.+?)(?= 二次キャッシュ：|$)/);
+        const socketMatch = text.match(
+          /ソケット形状：(.+?)(?= 二次キャッシュ：|$)/,
+        );
         const socket = socketMatch ? socketMatch[1] : null;
         const cacheMatch = text.match(/二次キャッシュ：(.+?)(?=\n|$)/);
         const cache = cacheMatch ? cacheMatch[1] : null;
         // 画像URLの抽出
-        const imgSrc = node.querySelector('.rkgItemImg img') ? node.querySelector('.rkgItemImg img').src : null;
+        const imgSrc = node.querySelector('.rkgItemImg img')
+          ? node.querySelector('.rkgItemImg img').src
+          : null;
         // // 補足情報を取得
         // const detailListElements = node.querySelectorAll('.rkgDetailList li');
         // const detailList = detailListElements.length > 0 ? Array.from(detailListElements).map(li => li.textContent.trim()) : [];
 
-        return { name, price, releaseDate, processor, generation, frequency, socket, cache, imgSrc};
+        return {
+          name,
+          price,
+          releaseDate,
+          processor,
+          generation,
+          frequency,
+          socket,
+          cache,
+          imgSrc,
+        };
       });
       return items;
     });

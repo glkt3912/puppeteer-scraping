@@ -18,10 +18,10 @@ class PcPartsScraper {
     const partsData = await page.evaluate(() => {
       // ページのDOM要素からデータを抽出するコード
       // 例: 商品名、価格、仕様などを取得
-      return [...document.querySelectorAll('.part-item')].map(el => ({
+      return [...document.querySelectorAll('.part-item')].map((el) => ({
         name: el.querySelector('.part-name').innerText,
         price: el.querySelector('.part-price').innerText,
-        specifications: el.querySelector('.part-specifications').innerText
+        specifications: el.querySelector('.part-specifications').innerText,
       }));
     });
 
