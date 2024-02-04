@@ -18,8 +18,9 @@ class CpuPage {
         const text = node.textContent;
         
         // 抽出
-        const nameMatch = text.match(/インテル\n(.+?)\n/);
-        const name = nameMatch ? nameMatch[1] : null;
+        const nameMatch = text.match(/メーカー：(AMD|インテル)\n?(.+?)\n/);
+        let name = nameMatch ? nameMatch[1] : null;
+        name = name === 'インテル' ? 'Intel' : name;
         const priceMatch = text.match(/最安値([¥\d,]+)/);
         const price = priceMatch ? priceMatch[1] : null;
         const releaseDateMatch = text.match(/発売日：(\d{4}年\d{1,2}月\d{1,2}日)/);
@@ -34,8 +35,10 @@ class CpuPage {
         const socket = socketMatch ? socketMatch[1] : null;
         const cacheMatch = text.match(/二次キャッシュ：(.+?)(?=\n|$)/);
         const cache = cacheMatch ? cacheMatch[1] : null;
+        // 画像URLの抽出
+        const imgSrc = node.querySelector('.rkgItemImg img') ? node.querySelector('.rkgItemImg img').src : null;
 
-        return { name, price, releaseDate, processor, generation, frequency, socket, cache };
+        return { name, price, releaseDate, processor, generation, frequency, socket, cache, imgSrc };
       });
       return items;
     });
