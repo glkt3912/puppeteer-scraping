@@ -18,11 +18,11 @@ class GpuPage {
         }
       }
       const nodeList = document.querySelectorAll('.rkgBox.noGraph');
-      console.log(nodeList);
       const items = Array.from(nodeList).map((node) => {
         const text = node.textContent;
         const name = extractTextByRegex(text, /^(.*)(?= \[PCIExp\s\d+GB\]$)/);
-        const maker = extractTextByRegex(text, /メーカー：\n*(.+?)\n/);
+        const brand = extractTextByRegex(text, /メーカー：\n*(.+?)\n/);
+        const releaseDate = extractTextByRegex(text, /発売日：(\d{4}年\d{1,2}月\d{1,2}日)/);
         const price = extractTextByRegex(text, /最安値([\s*¥\d,]+)/);
         const chipset = extractTextByRegex(
           text,
@@ -47,8 +47,9 @@ class GpuPage {
           : null;
         return {
           name,
-          maker,
+          brand,
           price,
+          releaseDate,
           chipset,
           busInterface,
           displayInput,

@@ -1,7 +1,7 @@
 class GpuScrapingService {
   constructor(siteScraper) {
     this.siteScraper = siteScraper;
-    this.url = 'https://kakaku.com/pc/videocard/ranking_0550/hot';
+    this.url = 'https://kakaku.com/pc/videocard/ranking_0550/';
   }
 
   async scrapeParts() {

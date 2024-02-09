@@ -1,9 +1,7 @@
-import CpuPart from '../../domain/entities/CpuPart.js';
-
-class CpuScrapingService {
+class PowerScrapingService {
   constructor(siteScraper) {
     this.siteScraper = siteScraper;
-    this.url = 'https://kakaku.com/pc/cpu/ranking_0510/';
+    this.url = 'https://kakaku.com/pc/power-supply/ranking_0590/';
   }
 
   async scrapeParts() {
@@ -24,4 +22,4 @@ class CpuScrapingService {
   }
 }
 
-export default CpuScrapingService;
+export default PowerScrapingService;

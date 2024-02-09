@@ -1,34 +1,16 @@
 /**
  * CPUに関する情報(名前、価格、仕様、コア数、クロック速度など)を表すエンティティ
  */
-class CpuPart {
-  constructor({
-    name,
-    price,
-    processor,
-    generation,
-    frequency,
-    socket,
-    cache,
-  }) {
-    this.name = name; // CPUの名前
-    this.price = price; // CPUの価格
-    this.processor = processor;
-    this.generation = generation;
-    this.frequency = frequency;
-    this.socket = socket;
-    this.cache = cache;
-  }
-
-  // CPUの価格を更新するメソッド
-  updatePrice(newPrice) {
-    this.price = newPrice;
-  }
-
-  // CPU情報を文字列で表現するメソッド
-  toString() {
-    return `CpuPart: ${this.name}, Price: ${this.price}, Processor: ${this.processor}, Generation: ${this.generation}, Frequency: ${this.frequency}, Socket: ${this.socket}, Cache: ${this.cache}`;
+export default class CpuPart {
+  constructor({ name, price, releaseDate, brand, generation, frequency, socket, cache, imgSrc }) {
+    this.name = name; // 商品名
+    this.price = price; // 価格(最安値)
+    this.brand = brand; // ブランド
+    this.releaseDate = releaseDate; // 発売日
+    this.generation = generation; // 世代
+    this.frequency = frequency; // クロック周波数
+    this.socket = socket; // ソケット形状
+    this.cache = cache; // 二次キャッシュ
+    this.imgSrc = imgSrc; // 画像URL
   }
 }
-
-export default CpuPart;
