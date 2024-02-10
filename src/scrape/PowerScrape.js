@@ -1,10 +1,8 @@
 import PowerScrapingService from '../application/services/PowerScrapingService.js';
-import PowerScraper from '../infrastructure/scraping/strategies/PowerScraper.js';
-// dotenvを動的にインポート
-// import('dotenv/config');
-// console.log(process.env.CPU_SCRAPING_URL);
+import GenericScraper from '../infrastructure/scraping/strategies/GenericScraper.js';
+import PowerPage from '../infrastructure/scraping/pageObjects/PowerPage.js';
 
-const powerScraper = new PowerScraper();
+const powerScraper = new GenericScraper(PowerPage);
 const scrapingService = new PowerScrapingService(powerScraper);
 
 scrapingService

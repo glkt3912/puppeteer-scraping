@@ -1,10 +1,8 @@
 import GpuScrapingService from '../application/services/GpuScrapingService.js';
-import GpuScraper from '../infrastructure/scraping/strategies/GpuScraper.js';
-// dotenvを動的にインポート
-// import('dotenv/config');
-// console.log(process.env.CPU_SCRAPING_URL);
+import GenericScraper from '../infrastructure/scraping/strategies/GenericScraper.js';
+import GpuPage from '../infrastructure/scraping/pageObjects/GpuPage.js';
 
-const gpuScraper = new GpuScraper();
+const gpuScraper = new GenericScraper(GpuPage);
 const scrapingService = new GpuScrapingService(gpuScraper);
 
 scrapingService

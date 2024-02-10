@@ -1,9 +1,9 @@
-class PowerPage {
+export default class PowerPage {
   constructor(page) {
     this.page = page;
   }
 
-  async getPowerData() {
+  async getData() {
     this.page.on('console', (message) => {
       console.log(`ブラウザコンソール: ${message.text()}`);
     });
@@ -44,5 +44,3 @@ class PowerPage {
     });
   }
 }
-
-export default PowerPage;

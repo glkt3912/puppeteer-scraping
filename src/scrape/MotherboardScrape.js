@@ -1,10 +1,8 @@
 import MotherboardScrapingService from '../application/services/MotherboardScrapingService.js';
-import MotherboardScraper from '../infrastructure/scraping/strategies/MotherboardScraper.js';
-// dotenvを動的にインポート
-// import('dotenv/config');
-// console.log(process.env.CPU_SCRAPING_URL);
+import GenericScraper from '../infrastructure/scraping/strategies/GenericScraper.js';
+import MotherboardPage from '../infrastructure/scraping/pageObjects/MotherboardPage.js';
 
-const motherboardScraper = new MotherboardScraper();
+const motherboardScraper = new GenericScraper(MotherboardPage);
 const scrapingService = new MotherboardScrapingService(motherboardScraper);
 
 scrapingService

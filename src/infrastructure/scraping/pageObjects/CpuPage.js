@@ -1,9 +1,9 @@
-class CpuPage {
+export default class CpuPage {
   constructor(page) {
     this.page = page;
   }
 
-  async getCpuData() {
+  async getData() {
     this.page.on('console', (message) => {
       console.log(`ブラウザコンソール: ${message.text()}`);
     });
@@ -54,5 +54,3 @@ class CpuPage {
     });
   }
 }
-
-export default CpuPage;

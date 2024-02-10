@@ -1,9 +1,9 @@
-class MotherboardPage {
+export default class MotherboardPage {
   constructor(page) {
     this.page = page;
   }
 
-  async getMotherboardData() {
+  async getData() {
     this.page.on('console', (message) => {
       console.log(`ブラウザコンソール: ${message.text()}`);
     });
@@ -43,5 +43,3 @@ class MotherboardPage {
     });
   }
 }
-
-export default MotherboardPage;

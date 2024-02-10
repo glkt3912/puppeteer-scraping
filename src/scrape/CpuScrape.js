@@ -1,10 +1,8 @@
 import CpuScrapingService from '../application/services/CpuScrapingService.js';
-import CpuScraper from '../infrastructure/scraping/strategies/CpuScraper.js';
-// dotenvを動的にインポート
-// import('dotenv/config');
-// console.log(process.env.CPU_SCRAPING_URL);
+import GenericScraper from '../infrastructure/scraping/strategies/GenericScraper.js';
+import CpuPage from '../infrastructure/scraping/pageObjects/CpuPage.js';
 
-const cpuScraper = new CpuScraper();
+const cpuScraper = new GenericScraper(CpuPage);
 const scrapingService = new CpuScrapingService(cpuScraper);
 
 scrapingService
