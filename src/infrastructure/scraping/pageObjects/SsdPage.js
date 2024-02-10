@@ -1,4 +1,4 @@
-export default class PowerPage {
+export default class SsdPage {
   constructor(page) {
     this.page = page;
   }
@@ -24,20 +24,24 @@ export default class PowerPage {
         const brand = extractTextByRegex(text, /メーカー：\n*(.+?)\n/);
         const releaseDate = extractTextByRegex(text, /発売日：(\d{4}年(?:\s*\d{1,2}月(?:\s*(?:上旬|中旬|下旬)|\s*\d{1,2}日)?)?)(?=\s*メーカー)/);
         const price = extractTextByRegex(text, /最安値([\s*¥\d,]+)/);
-        const formFactor = extractTextByRegex(text, /対応規格：(.+?)(?= 電源容量：|$)/);
-        const capacity = extractTextByRegex(text, /電源容量：(.+?)(?= 80PLUS認証：|$)/);
-        const certfication = extractTextByRegex(text, /80PLUS認証：(.+?)(?= サイズ：|$)/);
-        const size = extractTextByRegex(text, /サイズ：(.+?)(?= 重量：|$)/);
-        const weight = extractTextByRegex(text, /重量：(.+?)(?=\n|$)/)
-        const imgSrc = node.querySelector('.rkgItemImg img')
-        ? node.querySelector('.rkgItemImg img').src
-        : null;
-        // // 補足情報を取得
-        // const detailListElements = node.querySelectorAll('.rkgDetailList li');
-        // const detailList = detailListElements.length > 0 ? Array.from(detailListElements).map(li => li.textContent.trim()) : [];
+        const interfaceSpec = extractTextByRegex(text, /インターフェイス：(.+?)(?= タイプ：|$)/);
+        const type = extractTextByRegex(text, /タイプ：(.+?)(?= 読込速度：|$)/); // 補足：NANDフラッシュメモリ（メモリセル）の形式
+        const readSpeed = extractTextByRegex(text, /読込速度：(.+?)(?= 書込速度：|$)/);
+        const writeSpeed = extractTextByRegex(text, /書込速度：(.+?)(?=\n|$)/);
 
+        // 画像URLの抽出
+        const imgSrc = node.querySelector('.rkgItemImg img')
+          ? node.querySelector('.rkgItemImg img').src
+          : null;
         return {
-          name, brand, releaseDate, price, formFactor, capacity, certfication, size, weight, imgSrc
+          name,
+          brand,
+          price,
+          releaseDate,
+          interfaceSpec,
+          type,
+          readSpeed,
+          writeSpeed
         };
       });
       return items;
