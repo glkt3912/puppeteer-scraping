@@ -6,7 +6,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "tree": "tree ./src -L 4",
+    "scrape": "node ./src/scrape/GenericScrape.js"
   },
   "dependencies": {
     "@prisma/client": "^5.8.1",
