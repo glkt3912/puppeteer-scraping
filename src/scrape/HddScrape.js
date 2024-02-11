@@ -1,9 +1,9 @@
-import HhdScrapingService from '../application/services/HddScrapingService.js';
+import HddScrapingService from '../application/services/HddScrapingService.js';
 import GenericScraper from '../infrastructure/scraping/strategies/GenericScraper.js';
-import HhdPage from '../infrastructure/scraping/pageObjects/HddPage.js';
+import HddPage from '../infrastructure/scraping/pageObjects/HddPage.js';
 
-const hhdScraper = new GenericScraper(HhdPage);
-const scrapingService = new HhdScrapingService(hhdScraper);
+const hddScraper = new GenericScraper(HddPage);
+const scrapingService = new HddScrapingService(hddScraper);
 
 scrapingService
   .scrapeParts()
