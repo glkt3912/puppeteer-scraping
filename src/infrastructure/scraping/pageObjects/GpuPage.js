@@ -22,7 +22,10 @@ export default class GpuPage {
         const text = node.textContent;
         const name = node.querySelector('.rkgBoxNameItem').textContent;
         const brand = extractTextByRegex(text, /メーカー：\n*(.+?)\n/);
-        const releaseDate = extractTextByRegex(text, /発売日：(\d{4}年(?:\s*\d{1,2}月(?:\s*(?:上旬|中旬|下旬)|\s*\d{1,2}日)?)?)(?=\s*メーカー)/);
+        let releaseDate = '';
+        const releaseDateMatch = extractTextByRegex(text, /発売日：(\d{4}年(?:\s*\d{1,2}月(?:\s*(?:上旬|中旬|下旬)|\s*\d{1,2}日)?)?)(?=\s*メーカー)/);
+        const registrationDateMatch = extractTextByRegex(text, /登録日：(\d{4}年(?:\s*\d{1,2}月(?:\s*(?:上旬|中旬|下旬)|\s*\d{1,2}日)?)?)(?=\s*メーカー)/);
+        releaseDate = registrationDateMatch ?? releaseDateMatch;
         const price = extractTextByRegex(text, /最安値([\s*¥\d,]+)/);
         const chipset = extractTextByRegex(
           text,
