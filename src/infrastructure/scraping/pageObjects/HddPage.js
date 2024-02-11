@@ -1,4 +1,4 @@
-export default class HhdPage {
+export default class HddPage {
   constructor(page) {
     this.page = page;
   }

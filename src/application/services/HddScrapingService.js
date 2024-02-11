@@ -1,4 +1,4 @@
-class HhdScrapingService {
+class HddScrapingService {
   constructor(siteScraper) {
     this.siteScraper = siteScraper;
     this.url = 'https://kakaku.com/pc/hdd-35inch/ranking_0530/';
@@ -22,4 +22,4 @@ class HhdScrapingService {
   }
 }
 
-export default HhdScrapingService;
+export default HddScrapingService;
