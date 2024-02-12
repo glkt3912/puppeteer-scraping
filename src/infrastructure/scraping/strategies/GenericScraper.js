@@ -12,12 +12,16 @@ export default class GenericScraper extends ISiteScraper {
       throw new Error(`Invalid URL: ${url}`);
     }
 
-    const browser = await puppeteer.launch({ headless: 'new'});
+    const browser = await puppeteer.launch({ headless: 'new' });
     const page = await browser.newPage();
 
     await page.setRequestInterception(true);
     page.on('request', (request) => {
-      if (['stylesheet', 'font', 'image', 'script'].includes(request.resourceType())) {
+      if (
+        ['stylesheet', 'font', 'image', 'script'].includes(
+          request.resourceType(),
+        )
+      ) {
         request.abort();
       } else {
         request.continue();

@@ -23,14 +23,36 @@ export default class MemoryPage {
         const name = node.querySelector('.rkgBoxNameItem').textContent;
         const brand = extractTextByRegex(text, /メーカー：\n*(.+?)\n/);
         let releaseDate = '';
-        const releaseDateMatch = extractTextByRegex(text, /発売日：(\d{4}年(?:\s*\d{1,2}月(?:\s*(?:上旬|中旬|下旬)|\s*\d{1,2}日)?)?)(?=\s*メーカー)/);
-        const registrationDateMatch = extractTextByRegex(text, /登録日：(\d{4}年(?:\s*\d{1,2}月(?:\s*(?:上旬|中旬|下旬)|\s*\d{1,2}日)?)?)(?=\s*メーカー)/);
-        releaseDate = registrationDateMatch ?? releaseDateMatch;        const price = extractTextByRegex(text, /最安値([\s*¥\d,]+)/);
-        const capacity = extractTextByRegex(text, /メモリ容量(1枚あたり)：(.+?)(?= 枚数：|$)/);
-        const count = extractTextByRegex(text, /枚数：(.+?)(?= メモリ規格：|$)/);
-        const memoryStandard = extractTextByRegex(text, /メモリ規格：(.+?)(?= メモリインターフェイス：|$)/);
-        const memoryInterface = extractTextByRegex(text, /メモリインターフェイス：(.+?)(?= モジュール規格：|$)/);
-        const moduleStandard = extractTextByRegex(text, /モジュール規格：(.+?)(?=\n|$)/);
+        const releaseDateMatch = extractTextByRegex(
+          text,
+          /発売日：(\d{4}年(?:\s*\d{1,2}月(?:\s*(?:上旬|中旬|下旬)|\s*\d{1,2}日)?)?)(?=\s*メーカー)/,
+        );
+        const registrationDateMatch = extractTextByRegex(
+          text,
+          /登録日：(\d{4}年(?:\s*\d{1,2}月(?:\s*(?:上旬|中旬|下旬)|\s*\d{1,2}日)?)?)(?=\s*メーカー)/,
+        );
+        releaseDate = registrationDateMatch ?? releaseDateMatch;
+        const price = extractTextByRegex(text, /最安値([\s*¥\d,]+)/);
+        const capacity = extractTextByRegex(
+          text,
+          /メモリ容量(1枚あたり)：(.+?)(?= 枚数：|$)/,
+        );
+        const count = extractTextByRegex(
+          text,
+          /枚数：(.+?)(?= メモリ規格：|$)/,
+        );
+        const memoryStandard = extractTextByRegex(
+          text,
+          /メモリ規格：(.+?)(?= メモリインターフェイス：|$)/,
+        );
+        const memoryInterface = extractTextByRegex(
+          text,
+          /メモリインターフェイス：(.+?)(?= モジュール規格：|$)/,
+        );
+        const moduleStandard = extractTextByRegex(
+          text,
+          /モジュール規格：(.+?)(?=\n|$)/,
+        );
 
         // 画像URLの抽出
         const imgSrc = node.querySelector('.rkgItemImg img')
@@ -46,7 +68,7 @@ export default class MemoryPage {
           memoryStandard,
           memoryInterface,
           moduleStandard,
-          imgSrc
+          imgSrc,
         };
       });
       return items;

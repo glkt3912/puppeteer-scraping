@@ -20,17 +20,36 @@ export default class CpuPage {
       const nodeList = document.querySelectorAll('.rkgBox.noGraph');
       const items = Array.from(nodeList).map((node) => {
         const text = node.textContent;
-        const name = extractTextByRegex(text, /プロセッサ名：(.+?)(?= 世代：|$)/);
+        const name = extractTextByRegex(
+          text,
+          /プロセッサ名：(.+?)(?= 世代：|$)/,
+        );
         const brandMatch = text.match(/メーカー：(AMD|インテル)\n?(.+?)\n/);
         let brand = brandMatch ? brandMatch[1] : null;
         brand = brand === 'インテル' ? 'Intel' : brand;
         let releaseDate = '';
-        const releaseDateMatch = extractTextByRegex(text, /発売日：(\d{4}年(?:\s*\d{1,2}月(?:\s*(?:上旬|中旬|下旬)|\s*\d{1,2}日)?)?)(?=\s*メーカー)/);
-        const registrationDateMatch = extractTextByRegex(text, /登録日：(\d{4}年(?:\s*\d{1,2}月(?:\s*(?:上旬|中旬|下旬)|\s*\d{1,2}日)?)?)(?=\s*メーカー)/);
-        releaseDate = registrationDateMatch ?? releaseDateMatch;        const price = extractTextByRegex(text, /最安値([\s*¥\d,]+)/);
-        const generation = extractTextByRegex(text, /世代：(.+?)(?= クロック周波数：|$)/);
-        const frequency = extractTextByRegex(text, /クロック周波数：(.+?)(?= ソケット形状：|$)/);
-        const socket = extractTextByRegex(text, /ソケット形状：(.+?)(?= 二次キャッシュ：|$)/);
+        const releaseDateMatch = extractTextByRegex(
+          text,
+          /発売日：(\d{4}年(?:\s*\d{1,2}月(?:\s*(?:上旬|中旬|下旬)|\s*\d{1,2}日)?)?)(?=\s*メーカー)/,
+        );
+        const registrationDateMatch = extractTextByRegex(
+          text,
+          /登録日：(\d{4}年(?:\s*\d{1,2}月(?:\s*(?:上旬|中旬|下旬)|\s*\d{1,2}日)?)?)(?=\s*メーカー)/,
+        );
+        releaseDate = registrationDateMatch ?? releaseDateMatch;
+        const price = extractTextByRegex(text, /最安値([\s*¥\d,]+)/);
+        const generation = extractTextByRegex(
+          text,
+          /世代：(.+?)(?= クロック周波数：|$)/,
+        );
+        const frequency = extractTextByRegex(
+          text,
+          /クロック周波数：(.+?)(?= ソケット形状：|$)/,
+        );
+        const socket = extractTextByRegex(
+          text,
+          /ソケット形状：(.+?)(?= 二次キャッシュ：|$)/,
+        );
         const cache = extractTextByRegex(text, /二次キャッシュ：(.+?)(?=\n|$)/);
         // 画像URLの抽出
         const imgSrc = node.querySelector('.rkgItemImg img')
