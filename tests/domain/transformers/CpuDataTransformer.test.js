@@ -9,7 +9,7 @@ jest.mock('axios', () => ({
 describe('CpuDataTransformer', () => {
   it('should transform scraped data into the expected format', async () => {
     // スクレイピングしたデータの例
-    const scrapedData = {
+    const scrapedData = [{
       name: "Ryzen 7 5800X",
       brand: "AMD",
       price: "¥29,980",
@@ -19,17 +19,17 @@ describe('CpuDataTransformer', () => {
       socket: "Socket AM4",
       cache: "4MB",
       imgSrc: "https://example.com/image.jpg"
-    };
+    }];
 
     const expectedData =[{
-      name: scrapedData.name,
-      brand: scrapedData.brand,
-      price: parsePrice(scrapedData.price),
-      releaseDate: parseDate(scrapedData.releaseDate),
-      generation: scrapedData.generation,
-      frequency: scrapedData.frequency,
-      socket: scrapedData.socket,
-      cache: scrapedData.cache,
+      name: scrapedData[0].name,
+      brand: scrapedData[0].brand,
+      price: parsePrice(scrapedData[0].price),
+      releaseDate: parseDate(scrapedData[0].releaseDate),
+      generation: scrapedData[0].generation,
+      frequency: scrapedData[0].frequency,
+      socket: scrapedData[0].socket,
+      cache: scrapedData[0].cache,
       image: "images/cpu/image.jpg",
     }];
 
