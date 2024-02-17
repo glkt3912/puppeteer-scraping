@@ -14,8 +14,7 @@ const url = scrapingUrls[partType];
 // 対応するページオブジェクトを動的にインポート
 import(pageObjectMapping[partType]).then(({ default: PageObject }) => {
   const scrapingService = new GenericScrapingService(
-    GenericScraper,
-    PageObject,
+    new GenericScraper(PageObject),
   );
   scrapingService
     .scrapeParts(url)
