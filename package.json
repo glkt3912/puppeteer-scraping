@@ -8,7 +8,9 @@
   "scripts": {
     "format": "prettier --write src/",
     "tree": "tree ./src -L 4",
-    "scrape": "node ./src/scrape/GenericScrape.js"
+    "scrape": "node ./src/scrape/GenericScrape.js",
+    "test": "npx jest tests/domain/transformers/CpuDataTransformer.test.js",
+    "scrapeCpu": "node src/application/usecases/ScrapeAndSaveCpuData.js cpu"
   },
   "dependencies": {
     "@prisma/client": "^5.8.1",

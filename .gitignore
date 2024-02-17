@@ -2,3 +2,4 @@ yarn.lock
 .node-version
 node_modules
 .env
+./images
