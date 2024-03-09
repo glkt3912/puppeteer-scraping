@@ -2,12 +2,18 @@ import GenericScrapingService from '../services/GenericScrapingService';
 import GenericScraper from '../../infrastructure/scraping/strategies/GenericScraper';
 import scrapingUrls from '../../infrastructure/config/scrapingUrls';
 import pageObjectMapping from '../../infrastructure/config/pageObjectMapping';
+import {
+  transformerMapping,
+  repositoryMapping,
+} from '../../infrastructure/config/componentMapping';
 
 export default class ScrapePartsUseCase {
   constructor(partType) {
     this.partType = partType;
     this.url = scrapingUrls[partType];
     this.pageObjectPath = pageObjectMapping[partType];
+    this.transformerPath = transformerMapping[partType];
+    this.repositoryPath = repositoryMapping[partType];
   }
 
   async execute() {
@@ -17,12 +23,23 @@ export default class ScrapePartsUseCase {
       );
     }
 
-    const { default: PageObject } = await import(this.pageObjectPath);
+    // ページオブジェクト、トランスフォーマー、リポジトリを動的にインポート
+    const [
+      { default: PageObject },
+      { default: Transformer },
+      { default: Repository },
+    ] = await Promise.all([
+      import(this.pageObjectPath),
+      import(this.transformerPath),
+      import(this.repositoryPath),
+    ]);
     const scrapingService = new GenericScrapingService(
       GenericScraper,
-      PageObject,
+      new PageObject(),
+      new Transformer(),
+      new Repository(),
     );
 
-    return scrapingService.scrapeParts(this.url);
+    return scrapingService.scrapeAndSave(this.url);
   }
 }

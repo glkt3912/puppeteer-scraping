@@ -11,8 +11,8 @@ class CpuRepository {
 
   // CPUデータを作成または更新する
   async createOrUpdate(cpuData) {
-    const { name, brand } = cpuData;
-
+    const cpu = Array.isArray(cpuData) ? cpuData[0] : cpuData;
+    const { name, brand, generation, frequency, socket } = cpu;
     if (!name || !brand) {
       throw new Error(
         `CPU name and brand must be defined, received data: ${JSON.stringify(cpuData)}`,
@@ -24,21 +24,18 @@ class CpuRepository {
     const categoryId = categoryEntity.id;
 
     // 既に存在するCPUを検索
-    const existingCpu = await this.prisma.cpu.findUnique({
-      where: {
-        name,
-        brand,
-      },
+    const existingCpu = await this.prisma.cpu.findFirst({
+      where: { name, brand, generation, frequency, socket },
     });
 
     if (existingCpu) {
       return await this.prisma.cpu.update({
         where: { id: existingCpu.id },
-        data: { ...cpuData, categoryId },
+        data: { ...cpu, categoryId },
       });
     } else {
       return await this.prisma.cpu.create({
-        data: { ...cpuData, categoryId },
+        data: { ...cpu, categoryId },
       });
     }
   }
@@ -73,6 +70,33 @@ class CpuRepository {
       });
     } catch (error) {
       console.error('Error deleting CPU:', error);
+      throw error;
+    }
+  }
+
+  async resetData() {
+    // トランザクションを開始
+    const transaction = await this.prisma.$transaction(async (prisma) => {
+      // データをすべて削除
+      await prisma.cpu.deleteMany({});
+      // IDの生成をリセット
+      await prisma.$executeRawUnsafe(`TRUNCATE TABLE "Cpu" RESTART IDENTITY CASCADE;`);
+      console.log('Database has been reset successfully.');
+    });
+
+    return transaction;
+  }
+
+  async updateImage(id, imagePath) {
+    try {
+      const updatedCpu = await this.prisma.cpu.update({
+        where: { id },
+        data: { image: imagePath },
+      });
+      console.log(`Updated CPU image path: ${updatedCpu.image}`);
+      return updatedCpu;
+    } catch (error) {
+      console.error(`Error updating CPU image path: ${error.message}`);
       throw error;
     }
   }

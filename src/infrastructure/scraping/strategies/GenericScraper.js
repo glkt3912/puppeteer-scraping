@@ -18,7 +18,7 @@ export default class GenericScraper extends ISiteScraper {
     await page.setRequestInterception(true);
     page.on('request', (request) => {
       if (
-        ['stylesheet', 'font', 'image', 'script'].includes(
+        ['stylesheet', 'font', 'script'].includes(
           request.resourceType(),
         )
       ) {
@@ -29,7 +29,7 @@ export default class GenericScraper extends ISiteScraper {
     });
 
     try {
-      await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 });
+      await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 120000 });
       // 補足情報が含まれる要素がページに確実に存在することを確認
     } catch (error) {
       console.error('ページのロードに失敗しました:', error);

@@ -9,6 +9,6 @@ class PcPart {
   }
 
   updateSpecifications(newSpecifications) {
-      this.specifications = newSpecifications;
+    this.specifications = newSpecifications;
   }
 }

@@ -1,5 +1,5 @@
-import { parseDate, parsePrice } from '../utils/TransformUtils.js';
-import Image from '../utils/Image.js';
+import { parsePrice, parseDateToIsoStringJST } from '../utils/TransformUtils.js';
+import { ImageService } from '../../application/services/ImageService.js';
 
 export class CpuDataTransformer {
   /**
@@ -9,7 +9,6 @@ export class CpuDataTransformer {
    * @returns {boolean} 検証結果
    */
   isValidData(data) {
-    // 必要な項目がすべて存在し、適切な値を持っているかチェック
     return data.name && data.brand && data.price && data.releaseDate && data.generation && data.frequency && data.socket && data.cache && data.imgSrc;
   }
 
@@ -20,27 +19,38 @@ export class CpuDataTransformer {
    * @param {Array} scrapedDataArray スクレイピングしたデータの配列
    * @returns {Promise<Array>} 変換後のデータの配列
    */
-  async transform(scrapedDataArray) {
-    const transformedDataArray = [];
-    for (const data of scrapedDataArray) {
-      if (this.isValidData(data)) {
-        const image = new Image({ url: data.imgSrc, partType: 'cpu' });
-        const imagePath = await image.downloadAndSave();
+
+  async transform(scrapedDatas) {
+    const scrapedDataArray = Array.isArray(scrapedDatas) ? scrapedDatas : [scrapedDatas];
+    const transformedDataArray = await Promise.all(scrapedDataArray.map(async (data) => {
+      if (!this.isValidData(data)) return null; // 不備があるデータはスキップ
+
+      try {
+        console.log(data.imgSrc);
+        const releaseDateObject = parseDateToIsoStringJST(data.releaseDate);
+        const imageFileName = `${data.name.replace(/[\s\/\\?%*:|"<>]/g, '_')}.jpg`; // 画像ファイル名の生成例
+        const saveDir = './images/cpu'; // 保存ディレクトリの指定
+        const imagePath = await ImageService.downloadAndSaveImage(data.imgSrc, saveDir, imageFileName);
+        console.log(data);
         const transformedData = {
           name: data.name,
           brand: data.brand,
-          price: parsePrice(data.price || 0),
-          releaseDate: parseDate(data.releaseDate),
+          price: parsePrice(data.price || '0'),
+          releaseDate: releaseDateObject,
           generation: data.generation,
           frequency: data.frequency,
           socket: data.socket,
           cache: data.cache,
           image: imagePath,
         };
-        transformedDataArray.push(transformedData);
+        return transformedData;
+      } catch (error) {
+        console.error(`Error downloading image for ${data.name}: ${error}`);
+        return null; // 画像ダウンロードに失敗したデータは除外
       }
-    }
-    return transformedDataArray;
+    }));
+
+    return transformedDataArray.filter(data => data !== null);
   }
 }
 

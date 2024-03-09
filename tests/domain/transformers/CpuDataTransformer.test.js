@@ -1,5 +1,5 @@
 import { CpuDataTransformer } from '../../../src/domain/transformers/Transformers';
-import { parseDate, parsePrice } from '../../../src/domain/utils/TransformUtils';
+import { parseDateToIsoStringJST, parsePrice } from '../../../src/domain/utils/TransformUtils';
 
 // Axiosのモック化
 jest.mock('axios', () => ({
@@ -25,12 +25,12 @@ describe('CpuDataTransformer', () => {
       name: scrapedData[0].name,
       brand: scrapedData[0].brand,
       price: parsePrice(scrapedData[0].price),
-      releaseDate: parseDate(scrapedData[0].releaseDate),
+      releaseDate: parseDateToIsoStringJST(scrapedData[0].releaseDate),
       generation: scrapedData[0].generation,
       frequency: scrapedData[0].frequency,
       socket: scrapedData[0].socket,
       cache: scrapedData[0].cache,
-      image: "images/cpu/image.jpg",
+      image: "images/cpu/Ryzen_7_5800X.jpg",
     }];
 
     // CpuDataTransformer のインスタンスを作成

@@ -45,7 +45,7 @@ export default class MotherboardPage {
           text,
           /チップセット：(.+?)(?= メモリタイプ：|$)/,
         );
-        const mempryType = extractTextByRegex(
+        const memoryType = extractTextByRegex(
           text,
           /メモリタイプ：(.+?)(?=\n|$)/,
         );
@@ -64,7 +64,7 @@ export default class MotherboardPage {
           formFactor,
           socket,
           chipset,
-          mempryType,
+          memoryType,
           imgSrc,
         };
       });
