@@ -11,7 +11,9 @@ export default class GenericScrapingService {
 
   async scrapeAndSave(url) {
     if (!this.transformer || !this.repository) {
-      throw new Error('It seems like "Transformer" or "Repository" is not configured.');
+      throw new Error(
+        'It seems like "Transformer" or "Repository" is not configured.',
+      );
     }
     // スクレイピングでデータを取得
     const scrapedData = await this.scraper.scrape(url);

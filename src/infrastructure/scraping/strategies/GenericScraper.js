@@ -17,11 +17,7 @@ export default class GenericScraper extends ISiteScraper {
 
     await page.setRequestInterception(true);
     page.on('request', (request) => {
-      if (
-        ['stylesheet', 'font', 'script'].includes(
-          request.resourceType(),
-        )
-      ) {
+      if (['stylesheet', 'font', 'script'].includes(request.resourceType())) {
         request.abort();
       } else {
         request.continue();

@@ -39,10 +39,16 @@ export function parseDateToIsoStringJST(dateString) {
     const yearMonthMatch = dateString.match(/(\d{4})年(\d{1,2})月/);
     if (yearMonthMatch) {
       const [_, year, month] = yearMonthMatch;
-      const day = dateString.includes('上旬') ? '01' :
-                  dateString.includes('中旬') ? '15' :
-                  dateString.includes('下旬') ? '28' : '01'; // デフォルトは月の初日
-      date = new Date(`${year}-${month.padStart(2, '0')}-${day}T00:00:00+09:00`);
+      const day = dateString.includes('上旬')
+        ? '01'
+        : dateString.includes('中旬')
+          ? '15'
+          : dateString.includes('下旬')
+            ? '28'
+            : '01'; // デフォルトは月の初日
+      date = new Date(
+        `${year}-${month.padStart(2, '0')}-${day}T00:00:00+09:00`,
+      );
     }
   }
 

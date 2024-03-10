@@ -80,7 +80,9 @@ class CpuRepository {
       // データをすべて削除
       await prisma.cpu.deleteMany({});
       // IDの生成をリセット
-      await prisma.$executeRawUnsafe(`TRUNCATE TABLE "Cpu" RESTART IDENTITY CASCADE;`);
+      await prisma.$executeRawUnsafe(
+        `TRUNCATE TABLE "Cpu" RESTART IDENTITY CASCADE;`,
+      );
       console.log('Database has been reset successfully.');
     });
 

@@ -80,7 +80,9 @@ class GpuRepository {
       // データをすべて削除
       await prisma.gpu.deleteMany({});
       // IDの生成をリセット
-      await prisma.$executeRawUnsafe(`TRUNCATE TABLE "Gpu" RESTART IDENTITY CASCADE;`);
+      await prisma.$executeRawUnsafe(
+        `TRUNCATE TABLE "Gpu" RESTART IDENTITY CASCADE;`,
+      );
       console.log('Database has been reset successfully.');
     });
 
