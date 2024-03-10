@@ -15,23 +15,18 @@ export default class GenericScrapingService {
     }
     // スクレイピングでデータを取得
     const scrapedData = await this.scraper.scrape(url);
-    const transformedDataList = [];
 
-    for (const data of scrapedData) {
-      // 取得したデータを変換
-      let transformedData = await this.transformer.transform(data);
-      if (!Array.isArray(transformedData)) {
-        transformedData = [transformedData];
-      }
-
-      for (const item of transformedData) {
+    // 取得したデータを変換
+    let transformedData = await this.transformer.transform(scrapedData);
+    const savedItems = [];
+    for (const item of transformedData) {
+      if (item) {
         const savedItem = await this.repository.createOrUpdate(item);
+        savedItems.push(savedItem);
       }
-
-      transformedDataList.push(...transformedData);
     }
 
-    console.log(transformedDataList);
-    return transformedDataList;
+    console.log(savedItems);
+    return savedItems;
   }
 }

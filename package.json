@@ -10,7 +10,8 @@
     "tree": "tree ./src -L 4",
     "scrape": "node ./src/scrape/GenericScrape.js",
     "test": "npx jest tests/domain/transformers/CpuDataTransformer.test.js",
-    "scrapeCpu": "node src/application/usecases/ScrapeAndSaveCpuData.js cpu"
+    "scrapeCpu": "node src/application/usecases/ScrapeAndSaveCpuData.js cpu",
+    "scrapeGpu": "node src/application/usecases/ScrapeAndSaveGpuData.js gpu"
   },
   "dependencies": {
     "@prisma/client": "^5.10.2",
