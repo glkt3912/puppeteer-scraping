@@ -18,31 +18,31 @@ Puppeteerを使用して特定のウェブサイトからPCパーツの最新情
 ## ディレクトリ構成
 
 ```
-/src
-├── application                             # アプリケーション層 (サービスとユースケース)
-│   └── services
-│       ├── DatabaseResetService.js
-│       ├── GenericScrapingService.js
-│       ├── ImageService.js
-│       └── ScrapingService.js
+
+./src
+├── application
+│   ├── services
+│   │   ├── DatabaseResetService.js
+│   │   ├── GenericScrapingService.js
+│   │   ├── ImageService.js
+│   │   └── ScrapingService.js
 │   └── usecases
-│       ├── ScrapeAndSaveCpuData.js
-│       ├── ScrapeAndSaveGpuData.js
+│       ├── ScrapeAndSavePartData.js
 │       └── ScrapePartsUseCase.js
-├── domain                                  # ドメイン層 (エンティティ、バリューオブジェクト、ドメインサービス)
-│   └── entities
-│       ├── CpuPart.js
-│       ├── GpuPart.js
-│       └── PcPart.js
-│   └── transformers
-│       └── Transformers.js
+├── domain
+│   ├── entities
+│   │   ├── CpuPart.js
+│   │   ├── GpuPart.js
+│   │   └── PcPart.js
+│   ├── transformers
+│   │   └── Transformers.js
 │   └── utils
 │       └── TransformUtils.js
-├── infrastructure                          # インフラストラクチャ層 (データアクセス、外部サービスのインタフェース)
+├── infrastructure
 │   ├── config
 │   │   ├── componentMapping.js
 │   │   ├── pageObjectMapping.js
-│   │   └── scrapingUrls.js
+│   │   └── scrapingConfig.js
 │   ├── repositories
 │   │   ├── CategoryRepository.js
 │   │   ├── CpuRepository.js
@@ -63,8 +63,10 @@ Puppeteerを使用して特定のウェブサイトからPCパーツの最新情
 │           ├── ExampleSiteScraper.js
 │           ├── GenericScraper.js
 │           └── ISiteScraper.js
+├── scrape
+│   └── GenericScrape.js
 └── scripts
-    └── resetDatabase.js                    # データベースリセットスクリプト
+    └── resetDatabase.js
 
 ```
 
@@ -124,7 +126,8 @@ npx prisma init
 npx prisma migrate dev
 ```
 
-* ユースケース用のスクリプト実行
+* パーツデータ保存用のスクリプト実行
+
 ```
-pnpm scrapeCpu
+pnpm scrapeSave ****
 ```
