@@ -5,6 +5,11 @@ import path from 'path';
 export class ImageService {
   static async downloadAndSaveImage(imageUrl, saveDir, fileName) {
     const filePath = path.join(saveDir, fileName);
+    // ディレクトリの存在を確認し、存在しない場合は作成
+    if (!fs.existsSync(saveDir)) {
+      fs.mkdirSync(saveDir, { recursive: true });
+      console.log(`Directory created at ${saveDir}`);
+    }
     try {
       const response = await axios.get(imageUrl, {
         responseType: 'arraybuffer',
