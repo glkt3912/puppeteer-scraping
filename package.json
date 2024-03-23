@@ -8,8 +8,9 @@
   "scripts": {
     "format": "prettier --write src/",
     "tree": "tree ./src -L 4",
-    "scrape": "node ./src/scrape/GenericScrape.js",
+    "scrape": "node src/scrape/GenericScrape.js",
     "test": "npx jest tests/domain/transformers/GenericDataTransformer.test.js",
+    "resetRepository": "node src/application/usecases/ResetRepositoryData.js",
     "scrapeSave": "node src/application/usecases/ScrapeAndSavePartData.js"
   },
   "dependencies": {

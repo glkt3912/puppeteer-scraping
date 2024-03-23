@@ -22,6 +22,7 @@ model Category {
   // PcCase      PcCase[]
   // Power       Power[]
   // Ssd         Ssd[]
+  Memory    Memory[]
 }
 
 model Cpu {
@@ -59,6 +60,25 @@ model Gpu {
   url          String?   @db.VarChar(2048)
   categoryId   Int
   Category     Category  @relation(fields: [categoryId], references: [id])
+}
+
+model Memory {
+  id              Int       @id @default(autoincrement())
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  name            String
+  brand           String
+  price           Float?
+  releaseDate     DateTime?
+  capacity        String?
+  count           String?
+  memoryStandard  String?
+  memoryInterface String?
+  moduleStandard  String?
+  image           String?
+  url             String?   @db.VarChar(2048)
+  categoryId      Int
+  Category        Category  @relation(fields: [categoryId], references: [id])
 }
 
 // model Cooler {
@@ -114,23 +134,6 @@ model Gpu {
 //   url        String?     @db.VarChar(2048)
 //   interface  String
 //   size       String
-//   Category   Category    @relation(fields: [categoryId], references: [id])
-//   PartsList  PartsList[]
-// }
-
-// model Memory {
-//   id         Int         @id @default(autoincrement())
-//   createdAt  DateTime    @default(now())
-//   updatedAt  DateTime
-//   name       String
-//   brand      String
-//   interface  String
-//   image      String?
-//   categoryId Int
-//   url        String?     @db.VarChar(2048)
-//   price      String?
-//   type       String
-//   frequency  String
 //   Category   Category    @relation(fields: [categoryId], references: [id])
 //   PartsList  PartsList[]
 // }

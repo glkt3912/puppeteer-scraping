@@ -1,4 +1,4 @@
-import scrapingConfig from '../../infrastructure/config/scrapingConfig.js';
+import { scrapingConfig } from '../../infrastructure/config/scrapingConfig.js';
 import GenericScrapingService from '../services/GenericScrapingService.js';
 import GenericScraper from '../../infrastructure/scraping/strategies/GenericScraper.js';
 

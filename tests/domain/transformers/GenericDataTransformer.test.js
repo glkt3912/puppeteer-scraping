@@ -104,3 +104,54 @@ describe('GpuData', () => {
     expect(transformedData).toEqual(expectedData);
   });
 });
+
+describe('MemoryData', () => {
+  it('should transform scraped data into the expected format', async () => {
+    const scrapedData = [{
+      name: "CT2K16G4DFRA32A [DDR4 PC4-25600 16GB 2枚組]",
+      brand: "crucial(クルーシャル)",
+      price: "10480",
+      releaseDate: "2021年7月20日",
+      capacity: "",
+      count: "2枚",
+      memoryStandard: "DDR4 SDRAM",
+      memoryInterface: "DIMM",
+      moduleStandard: "PC4-25600(DDR4-3200)",
+      imgSrc: "https://example.com2/image.jpg"
+    }];
+
+    const transformerConfig = {
+      requiredFields: ['name', 'brand', 'price', 'releaseDate'],
+      fields: {
+        name: { source: 'name' },
+        brand: { source: 'brand' },
+        price: { source: 'price', type: 'price' },
+        releaseDate: { source: 'releaseDate', type: 'date' },
+        capacity: { source: 'capacity' },
+        count: { source: 'count' },
+        memoryStandard: { source: 'memoryStandard' },
+        memoryInterface: { source: 'memoryInterface' },
+        moduleStandard: { source: 'moduleStandard' },
+        image: { source: 'imgSrc', type: 'image' },
+      },
+      imageSaveDir: './images/memory',
+    };
+
+    const expectedData =[{
+      name: scrapedData[0].name,
+      brand: scrapedData[0].brand,
+      price: parsePrice(scrapedData[0].price),
+      releaseDate: parseDateToIsoStringJST(scrapedData[0].releaseDate),
+      capacity: scrapedData[0].capacity,
+      count: scrapedData[0].count,
+      memoryStandard: scrapedData[0].memoryStandard,
+      memoryInterface: scrapedData[0].memoryInterface,
+      moduleStandard: scrapedData[0].moduleStandard,
+      image: "images/memory/CT2K16G4DFRA32A_[DDR4_PC4-25600_16GB_2枚組].jpg",
+    }];
+
+    const transformer = new GenericDataTransformer(transformerConfig);
+    const transformedData = await transformer.transform(scrapedData);
+    expect(transformedData).toEqual(expectedData);
+  });
+});
