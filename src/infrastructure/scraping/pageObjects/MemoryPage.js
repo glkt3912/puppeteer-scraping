@@ -35,7 +35,7 @@ export default class MemoryPage {
         const price = extractTextByRegex(text, /最安値([\s*¥\d,]+)/);
         const capacity = extractTextByRegex(
           text,
-          /メモリ容量(1枚あたり)：(.+?)(?= 枚数：|$)/,
+          /メモリ容量\(1枚あたり\)：(.+?)(?= 枚数：|$)/,
         );
         const count = extractTextByRegex(
           text,

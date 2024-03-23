@@ -12,7 +12,7 @@ class GpuRepository {
   // GPUデータを作成または更新する
   async createOrUpdate(gpuData) {
     const gpu = Array.isArray(gpuData) ? gpuData[0] : gpuData;
-    const { name, brand, generation, frequency, socket } = gpu;
+    const { name, brand, chip, memory, wattage } = gpu;
     if (!name || !brand) {
       throw new Error(
         `GPU name and brand must be defined, received data: ${JSON.stringify(gpuData)}`,
@@ -25,7 +25,7 @@ class GpuRepository {
 
     // 既に存在するGPUを検索
     const existingGpu = await this.prisma.gpu.findFirst({
-      where: { name, brand, generation, frequency, socket },
+      where: { name, brand, chip, memory, wattage },
     });
 
     if (existingGpu) {
