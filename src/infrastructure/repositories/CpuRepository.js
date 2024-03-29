@@ -12,7 +12,7 @@ class CpuRepository {
   // CPUデータを作成または更新する
   async createOrUpdate(cpuData) {
     const cpu = Array.isArray(cpuData) ? cpuData[0] : cpuData;
-    const { name, brand, generation, frequency, socket } = cpu;
+    const { name, brand, price, releaseDate } = cpu;
     if (!name || !brand) {
       throw new Error(
         `CPU name and brand must be defined, received data: ${JSON.stringify(cpuData)}`,
@@ -25,7 +25,7 @@ class CpuRepository {
 
     // 既に存在するCPUを検索
     const existingCpu = await this.prisma.cpu.findFirst({
-      where: { name, brand, generation, frequency, socket },
+      where: { name, brand, price, releaseDate },
     });
 
     if (existingCpu) {

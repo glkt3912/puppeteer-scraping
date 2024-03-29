@@ -1,4 +1,4 @@
-import { GenericDataTransformer } from '../../../src/domain/transformers/Transformers';
+import { GenericDataTransformer } from '../../../src/domain/transformers/GenericDataTransformer';
 import { parseDateToIsoStringJST, parsePrice } from '../../../src/domain/utils/TransformUtils';
 
 // Axiosのモック化
@@ -148,6 +148,54 @@ describe('MemoryData', () => {
       memoryInterface: scrapedData[0].memoryInterface,
       moduleStandard: scrapedData[0].moduleStandard,
       image: "images/memory/CT2K16G4DFRA32A_[DDR4_PC4-25600_16GB_2枚組].jpg",
+    }];
+
+    const transformer = new GenericDataTransformer(transformerConfig);
+    const transformedData = await transformer.transform(scrapedData);
+    expect(transformedData).toEqual(expectedData);
+  });
+});
+
+describe('CoolerData', () => {
+  it('should transform scraped data into the expected format', async () => {
+    const scrapedData = [{
+      name: "AK620 R-AK620-BKNNMT-G",
+      brand: "DEEPCOOL(ディープクール)",
+      price: "7522",
+      releaseDate: "2021年10月9日",
+      type: 'サイドフロー型',
+      size: '129x160x138mm',
+      tdp: '最大260W',
+      noiseMaxLevel: '28dBA',
+      imgSrc: 'https://img1.kakaku.k-img.com/images/productimage/t/K0001382333.jpg'
+    }];
+
+    const transformerConfig = {
+      requiredFields: ['name', 'brand', 'price', 'releaseDate'],
+      fields: {
+        name: { source: 'name' },
+        brand: { source: 'brand' },
+        price: { source: 'price', type: 'price' },
+        releaseDate: { source: 'releaseDate', type: 'date' },
+        type: { source: 'type' },
+        size: { source: 'size' },
+        tdp: { source: 'tdp' },
+        noiseMaxLevel: { source: 'noiseMaxLevel' },
+        image: { source: 'imgSrc', type: 'image' },
+      },
+      imageSaveDir: './images/cooler',
+    };
+
+    const expectedData =[{
+      name: scrapedData[0].name,
+      brand: scrapedData[0].brand,
+      price: parsePrice(scrapedData[0].price),
+      releaseDate: parseDateToIsoStringJST(scrapedData[0].releaseDate),
+      type: scrapedData[0].type,
+      size: scrapedData[0].size,
+      tdp: scrapedData[0].tdp,
+      noiseMaxLevel: scrapedData[0].noiseMaxLevel,
+      image: "images/cooler/AK620_R-AK620-BKNNMT-G.jpg",
     }];
 
     const transformer = new GenericDataTransformer(transformerConfig);

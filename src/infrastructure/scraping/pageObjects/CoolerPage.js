@@ -35,7 +35,7 @@ export default class CoolerPage {
         const price = extractTextByRegex(text, /最安値([\s*¥\d,]+)/);
         const type = extractTextByRegex(
           text,
-          /タイプ：(.+?)(?=  幅x高さx奥行：|$)/,
+          /タイプ：(.+?)(?= 幅x高さx奥行：|$)/,
         );
         const size = extractTextByRegex(
           text,
@@ -45,7 +45,7 @@ export default class CoolerPage {
           text,
           /TDP：(.+?)(?= 最大ノイズレベル：|$)/,
         );
-        const noiseMaxL = extractTextByRegex(
+        const noiseMaxLevel = extractTextByRegex(
           text,
           /最大ノイズレベル：(.+?)(?=\n|$)/,
         );
@@ -60,7 +60,7 @@ export default class CoolerPage {
           type,
           size,
           tdp,
-          noiseMaxL,
+          noiseMaxLevel,
           imgSrc,
         };
       });

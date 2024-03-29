@@ -12,7 +12,7 @@ class MemoryRepository {
   // Memoryデータを作成または更新する
   async createOrUpdate(memoryData) {
     const memory = Array.isArray(memoryData) ? memoryData[0] : memoryData;
-    const { name, brand, capacity, count } = memory;
+    const { name, brand, price, releaseDate } = memory;
     if (!name || !brand) {
       throw new Error(
         `Memory name and brand must be defined, received data: ${JSON.stringify(memoryData)}`,
@@ -25,7 +25,7 @@ class MemoryRepository {
 
     // 既に存在するMemoryを検索
     const existingMemory = await this.prisma.memory.findFirst({
-      where: { name, brand, capacity, count },
+      where: { name, brand, price, releaseDate },
     });
 
     if (existingMemory) {

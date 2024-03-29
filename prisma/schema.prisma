@@ -23,6 +23,7 @@ model Category {
   // Power       Power[]
   // Ssd         Ssd[]
   Memory    Memory[]
+  Cooler    Cooler[]
 }
 
 model Cpu {
@@ -81,25 +82,23 @@ model Memory {
   Category        Category  @relation(fields: [categoryId], references: [id])
 }
 
-// model Cooler {
-//   id           Int         @id @default(autoincrement())
-//   createdAt    DateTime    @default(now())
-//   updatedAt    DateTime
-//   name         String
-//   brand        String
-//   image        String?
-//   url          String?     @db.VarChar(2048)
-//   price        String?
-//   categoryId   Int
-//   airFlow      String
-//   coolingType  String
-//   fanCount     Int
-//   size         String
-//   socket       String
-//   supportedTdp Int
-//   Category     Category    @relation(fields: [categoryId], references: [id])
-//   PartsList    PartsList[]
-// }
+model Cooler {
+  id            Int       @id @default(autoincrement())
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  name          String
+  brand         String
+  price         Float?
+  releaseDate   DateTime?
+  type          String?
+  size          String?
+  tdp           String?
+  noiseMaxLevel String?
+  image         String?
+  url           String?   @db.VarChar(2048)
+  categoryId    Int
+  Category      Category  @relation(fields: [categoryId], references: [id])
+}
 
 // model Display {
 //   id         Int         @id @default(autoincrement())
