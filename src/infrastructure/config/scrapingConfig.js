@@ -3,17 +3,31 @@ import CpuPage from '../scraping/pageObjects/CpuPage.js';
 import GpuPage from '../scraping/pageObjects/GpuPage.js';
 import MemoryPage from '../scraping/pageObjects/MemoryPage.js';
 import CoolerPage from '../scraping/pageObjects/CoolerPage.js';
+import DisplayPage from '../scraping/pageObjects/DisplayPage.js';
+import PcCasePage from '../scraping/pageObjects/PcCasePage.js';
+import HddPage from '../scraping/pageObjects/HddPage.js';
+import SsdPage from '../scraping/pageObjects/SsdPage.js';
+import MotherboardPage from '../scraping/pageObjects/MotherboardPage.js';
 import CpuRepository from '../repositories/CpuRepository.js';
 import GpuRepository from '../repositories/GpuRepository.js';
 import MemoryRepository from '../repositories/MemoryRepository.js';
 import CoolerRepository from '../repositories/CoolerRepository.js';
-
+import DisplayRepository from '../repositories/DisplayRepository.js';
+import PcCaseRepository from '../repositories/PcCaseRepository.js';
+import HddRepository from '../repositories/HddRepository.js';
+import SsdRepository from '../repositories/SsdRepository.js';
+import MotherboardRepository from '../repositories/MotherboardRepository.js';
 
 export const repositoryMap = {
   cpu: CpuRepository,
   gpu: GpuRepository,
   memory: MemoryRepository,
   cooler: CoolerRepository,
+  display: DisplayRepository,
+  pccase: PcCaseRepository,
+  hdd: HddRepository,
+  ssd: SsdRepository,
+  motherboard: MotherboardRepository,
 }
 
 export const scrapingConfig = {
@@ -184,7 +198,7 @@ export const scrapingConfig = {
   },
   hdd: {
     url: 'https://kakaku.com/pc/hdd-35inch/ranking_0530/',
-    pageObject: PowerPage,
+    pageObject: HddPage,
     transformer: new GenericDataTransformer({
       requiredFields: ['name', 'brand', 'price', 'releaseDate'],
       fields: {
