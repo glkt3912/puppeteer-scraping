@@ -8,22 +8,20 @@ datasource db {
 }
 
 model Category {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  name      String   @unique
-  Cpu       Cpu[]
-  Gpu       Gpu[]
-  // Display     Display[]
-  // Cooler      Cooler[]
-  // Hdd         Hdd[]
-  // Memory      Memory[]
-  // MotherBoard MotherBoard[]
-  // PcCase      PcCase[]
-  // Power       Power[]
-  // Ssd         Ssd[]
-  Memory    Memory[]
-  Cooler    Cooler[]
+  id          Int           @id @default(autoincrement())
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  name        String        @unique
+  Cpu         Cpu[]
+  Gpu         Gpu[]
+  Memory      Memory[]
+  Cooler      Cooler[]
+  Display     Display[]
+  Hdd         Hdd[]
+  MotherBoard MotherBoard[]
+  PcCase      PcCase[]
+  Power       Power[]
+  Ssd         Ssd[]
 }
 
 model Cpu {
@@ -100,115 +98,119 @@ model Cooler {
   Category      Category  @relation(fields: [categoryId], references: [id])
 }
 
-// model Display {
-//   id         Int         @id @default(autoincrement())
-//   createdAt  DateTime    @default(now())
-//   updatedAt  DateTime
-//   name       String
-//   brand      String
-//   size       String
-//   contrast   String?
-//   image      String?
-//   categoryId Int
-//   price      String?
-//   resolution String
-//   speed      String
-//   type       String
-//   url        String?     @db.VarChar(2048)
-//   Category   Category    @relation(fields: [categoryId], references: [id])
-//   PartsList  PartsList[]
-// }
+model Display {
+  id           Int       @id @default(autoincrement())
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  name         String
+  brand        String
+  price        Float?
+  releaseDate  DateTime?
+  size         String?
+  displayType  String?
+  displayInput String?
+  resolution   String?
+  panelType    String?
+  refreshRate  String?
+  image        String?
+  url          String?   @db.VarChar(2048)
+  categoryId   Int
+  Category     Category  @relation(fields: [categoryId], references: [id])
+}
 
-// model Hdd {
-//   id         Int         @id @default(autoincrement())
-//   createdAt  DateTime    @default(now())
-//   updatedAt  DateTime
-//   name       String
-//   brand      String
-//   capacity   String
-//   speed      String
-//   image      String?
-//   categoryId Int
-//   price      String?
-//   url        String?     @db.VarChar(2048)
-//   interface  String
-//   size       String
-//   Category   Category    @relation(fields: [categoryId], references: [id])
-//   PartsList  PartsList[]
-// }
+model Hdd {
+  id                    Int       @id @default(autoincrement())
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  name                  String
+  brand                 String
+  price                 Float?
+  releaseDate           DateTime?
+  capacity              String?
+  rpm                   String?
+  interfaceSpec         String?
+  magneticRecordingType String?
+  image                 String?
+  url                   String?   @db.VarChar(2048)
+  categoryId            Int
+  Category              Category  @relation(fields: [categoryId], references: [id])
+}
 
-// model MotherBoard {
-//   id          Int         @id @default(autoincrement())
-//   createdAt   DateTime    @default(now())
-//   updatedAt   DateTime
-//   name        String
-//   brand       String
-//   socket      String
-//   image       String?
-//   categoryId  Int
-//   price       String?
-//   url         String?     @db.VarChar(2048)
-//   formFactor  String
-//   memoryType  String
-//   pciSlots    String?
-//   chip        String
-//   maxMemory   Int
-//   memorySlots Int
-//   Category    Category    @relation(fields: [categoryId], references: [id])
-//   PartsList   PartsList[]
-// }
+model MotherBoard {
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  name        String
+  brand       String
+  price       Float?
+  releaseDate DateTime?
+  socket      String?
+  formFactor  String?
+  chipset     String?
+  memoryType  String?
+  image       String?
+  url         String?   @db.VarChar(2048)
+  categoryId  Int
+  Category    Category  @relation(fields: [categoryId], references: [id])
+}
 
-// model PcCase {
-//   id         Int         @id @default(autoincrement())
-//   createdAt  DateTime    @default(now())
-//   updatedAt  DateTime
-//   name       String
-//   brand      String
-//   weight     String
-//   image      String?
-//   categoryId Int
-//   price      String?
-//   url        String?     @db.VarChar(2048)
-//   size       String
-//   formFactor String
-//   PartsList  PartsList[]
-//   Category   Category    @relation(fields: [categoryId], references: [id])
-// }
+model PcCase {
+  id                      Int       @id @default(autoincrement())
+  createdAt               DateTime  @default(now())
+  updatedAt               DateTime  @updatedAt
+  name                    String
+  brand                   String
+  price                   Float?
+  releaseDate             DateTime?
+  size                    String?
+  formFactor              String?
+  mountingBracket35       String?
+  mountingBracket35shadow String?
+  mountingBracket525      String?
+  image                   String?
+  url                     String?   @db.VarChar(2048)
+  categoryId              Int
+  Category                Category  @relation(fields: [categoryId], references: [id])
+}
 
-// model Power {
-//   id            Int         @id @default(autoincrement())
-//   createdAt     DateTime    @default(now())
-//   updatedAt     DateTime
-//   name          String
-//   brand         String
-//   capacity      String
-//   image         String?
-//   categoryId    Int
-//   price         String?
-//   url           String?     @db.VarChar(2048)
-//   certification String
-//   type          String
-//   PartsList     PartsList[]
-//   Category      Category    @relation(fields: [categoryId], references: [id])
-// }
+model Power {
+  id           Int       @id @default(autoincrement())
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  name         String
+  brand        String
+  price        Float?
+  releaseDate  DateTime?
+  capacity     String?
+  formFactor   String?
+  certfication String?
+  size         String?
+  weight       String?
+  image        String?
+  url          String?   @db.VarChar(2048)
+  categoryId   Int
+  Category     Category  @relation(fields: [categoryId], references: [id])
+}
 
-// model Ssd {
-//   id         Int         @id @default(autoincrement())
-//   createdAt  DateTime    @default(now())
-//   updatedAt  DateTime
-//   name       String
-//   brand      String
-//   capacity   String
-//   size       String
-//   interface  String
-//   image      String?
-//   categoryId Int
-//   price      String?
-//   url        String?     @db.VarChar(2048)
-//   speed      String
-//   PartsList  PartsList[]
-//   Category   Category    @relation(fields: [categoryId], references: [id])
-// }
+model Ssd {
+  id            Int       @id @default(autoincrement())
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  name          String
+  brand         String
+  price         Float?
+  releaseDate   DateTime?
+  capacity      String?
+  standard      String?
+  interfaceSpec String?
+  type          String?
+  readSpeed     String?
+  writeSpeed    String?
+  image         String?
+  url           String?   @db.VarChar(2048)
+  categoryId    Int
+  Category      Category  @relation(fields: [categoryId], references: [id])
+}
 
 // model User {
 //   id             Int         @id @default(autoincrement())
