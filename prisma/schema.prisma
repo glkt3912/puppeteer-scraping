@@ -18,7 +18,7 @@ model Category {
   Cooler      Cooler[]
   Display     Display[]
   Hdd         Hdd[]
-  MotherBoard MotherBoard[]
+  Motherboard Motherboard[]
   PcCase      PcCase[]
   Power       Power[]
   Ssd         Ssd[]
@@ -136,7 +136,7 @@ model Hdd {
   Category              Category  @relation(fields: [categoryId], references: [id])
 }
 
-model MotherBoard {
+model Motherboard {
   id          Int       @id @default(autoincrement())
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt

@@ -5,6 +5,7 @@ import MemoryPage from '../scraping/pageObjects/MemoryPage.js';
 import CoolerPage from '../scraping/pageObjects/CoolerPage.js';
 import DisplayPage from '../scraping/pageObjects/DisplayPage.js';
 import PcCasePage from '../scraping/pageObjects/PcCasePage.js';
+import PowerPage from '../scraping/pageObjects/PowerPage.js';
 import HddPage from '../scraping/pageObjects/HddPage.js';
 import SsdPage from '../scraping/pageObjects/SsdPage.js';
 import MotherboardPage from '../scraping/pageObjects/MotherboardPage.js';
@@ -14,6 +15,7 @@ import MemoryRepository from '../repositories/MemoryRepository.js';
 import CoolerRepository from '../repositories/CoolerRepository.js';
 import DisplayRepository from '../repositories/DisplayRepository.js';
 import PcCaseRepository from '../repositories/PcCaseRepository.js';
+import PowerRepository from '../repositories/PowerRepository.js';
 import HddRepository from '../repositories/HddRepository.js';
 import SsdRepository from '../repositories/SsdRepository.js';
 import MotherboardRepository from '../repositories/MotherboardRepository.js';
@@ -25,6 +27,7 @@ export const repositoryMap = {
   cooler: CoolerRepository,
   display: DisplayRepository,
   pccase: PcCaseRepository,
+  power: PowerRepository,
   hdd: HddRepository,
   ssd: SsdRepository,
   motherboard: MotherboardRepository,

@@ -10,40 +10,40 @@ class PcCaseRepository {
   }
 
   // PcCaseデータを作成または更新する
-  async createOrUpdate(pccaseData) {
-    const pccase = Array.isArray(pccaseData) ? pccaseData[0] : pccaseData;
-    const { name, brand, price, releaseDate } = pccase;
+  async createOrUpdate(pcCaseData) {
+    const pcCase = Array.isArray(pcCaseData) ? pcCaseData[0] : pcCaseData;
+    const { name, brand, price, releaseDate } = pcCase;
     if (!name || !brand) {
       throw new Error(
-        `PcCase name and brand must be defined, received data: ${JSON.stringify(pccaseData)}`,
+        `PcCase name and brand must be defined, received data: ${JSON.stringify(pcCaseData)}`,
       );
     }
 
     // カテゴリーを取得または作成
-    const categoryEntity = await categoryRepository.getCategoryByName('pccase');
+    const categoryEntity = await categoryRepository.getCategoryByName('pcCase');
     const categoryId = categoryEntity.id;
 
     // 既に存在するPcCaseを検索
-    const existingPcCase = await this.prisma.pccase.findFirst({
+    const existingPcCase = await this.prisma.pcCase.findFirst({
       where: { name, brand, price, releaseDate },
     });
 
     if (existingPcCase) {
-      return await this.prisma.pccase.update({
+      return await this.prisma.pcCase.update({
         where: { id: existingPcCase.id },
-        data: { ...pccase, categoryId },
+        data: { ...pcCase, categoryId },
       });
     } else {
-      return await this.prisma.pccase.create({
-        data: { ...pccase, categoryId },
+      return await this.prisma.pcCase.create({
+        data: { ...pcCase, categoryId },
       });
     }
   }
 
-  async findById(pccaseId) {
+  async findById(pcCaseId) {
     try {
-      return await this.prisma.pccase.findUnique({
-        where: { id: pccaseId },
+      return await this.prisma.pcCase.findUnique({
+        where: { id: pcCaseId },
       });
     } catch (error) {
       console.error('Error finding PcCase by ID:', error);
@@ -51,10 +51,10 @@ class PcCaseRepository {
     }
   }
 
-  async update(pccaseId, newPcCaseData) {
+  async update(pcCaseId, newPcCaseData) {
     try {
-      return await this.prisma.pccase.update({
-        where: { id: pccaseId },
+      return await this.prisma.pcCase.update({
+        where: { id: pcCaseId },
         data: newPcCaseData,
       });
     } catch (error) {
@@ -63,10 +63,10 @@ class PcCaseRepository {
     }
   }
 
-  async delete(pccaseId) {
+  async delete(pcCaseId) {
     try {
-      return await this.prisma.pccase.delete({
-        where: { id: pccaseId },
+      return await this.prisma.pcCase.delete({
+        where: { id: pcCaseId },
       });
     } catch (error) {
       console.error('Error deleting PcCase:', error);
@@ -78,7 +78,7 @@ class PcCaseRepository {
     // トランザクションを開始
     const transaction = await this.prisma.$transaction(async (prisma) => {
       // データをすべて削除
-      await prisma.pccase.deleteMany({});
+      await prisma.pcCase.deleteMany({});
       // IDの生成をリセット
       await prisma.$executeRawUnsafe(
         `TRUNCATE TABLE "PcCase" RESTART IDENTITY CASCADE;`,
@@ -91,7 +91,7 @@ class PcCaseRepository {
 
   async updateImage(id, imagePath) {
     try {
-      const updatedPcCase = await this.prisma.pccase.update({
+      const updatedPcCase = await this.prisma.pcCase.update({
         where: { id },
         data: { image: imagePath },
       });
